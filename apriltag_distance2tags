@@ -399,16 +399,16 @@ public:
     // write the first row to file
     ofstream outputFile;
     outputFile.open("rawData.csv", ios::app);
-    outputFile << "Distance(m)"
+    outputFile << "Distance Human-Nico(m)"
         << ", Time"
-        << ", Id 0 - Distance(m)" 
-        << ", Id 0 - x(m)" 
-        << ", Id 0 - y(m)" 
-        << ", Id 0 - z(m)"        
-        << ", Id 1 - Distance(m)" 
-        << ", Id 1 - x(m)" 
-        << ", Id 1 - y(m)" 
-        << ", Id 1 - z(m)" 
+        // << ", Id 0 - Distance(m)" 
+        // << ", Id 0 - x(m)" 
+        // << ", Id 0 - y(m)" 
+        // << ", Id 0 - z(m)"        
+        // << ", Id 1 - Distance(m)" 
+        // << ", Id 1 - x(m)" 
+        // << ", Id 1 - y(m)" 
+        // << ", Id 1 - z(m)" 
         << endl;
     outputFile.close(); 
 
@@ -483,25 +483,25 @@ public:
           final_distance = sum_distance/num_dis;
         // get here if none distance read in a second
         else
-          // distance should be 0
+          // set distance to be 0
           final_distance = 0.0;
         // reset num_dis and sum_distance every 24 frames
         num_dis = 0.0;
         sum_distance = 0.0;
         // write time and 2D distance to file
         ofstream outputFile;
-        outputFile.open("rawData.csv", ios::app);
-        outputFile << final_distance
+        outputFile.open("rawData.csv", ios::app);  
+        // distance = 0 means one of the tags not detected      
+        if( final_distance == 0.0){
+          outputFile << "not detected"
+            << "," << real_time       
+           << endl;
+        }   
+        else{
+          outputFile << final_distance
           << "," << real_time
-          << "," << tag0[3]
-          << "," << tag0[0]
-          << "," << tag0[1]
-          << "," << tag0[2]
-          << "," << tag1[3]
-          << "," << tag1[0]
-          << "," << tag1[1]
-          << "," << tag1[2]        
           << endl;
+        }          
         outputFile.close(); 
       }    
 
